@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:manager_homestay_app/constants/color.dart';
-import 'package:manager_homestay_app/models/homestay.dart';
+import 'package:manager_homestay_app/models/homestay/homestay.dart';
+import 'package:manager_homestay_app/models/room/room.dart';
 import 'package:manager_homestay_app/widgets/common/paginated_grid_widget.dart';
 
 import 'homestay_widget.dart';
@@ -30,17 +31,22 @@ class _HomestayListState extends State<HomestayList> {
   Future<void> _fetchPage(int page) async {
     homestayList.add(Homestay(
         id: 1,
-        name: 'Vinh Tuy 1 Vinh Tuy 1 Vinh Tuy 1 Vinh Tuy 1',
+        name: 'Vĩnh Tuy 1 Phố Hai Bà Trưng Hà Nội',
         address: 'Số 15, phố Vĩnh Tuy',
-        operationStartDate: DateTime.now()));
+        operationStartDate: DateTime.now(),
+        rooms: [
+          Room(id: 1, name: 'phòng 101', type: 0, price: 120000, status: 0),
+          Room(id: 2, name: 'phòng 102', type: 0, price: 120000, status: 1),
+          Room(id: 3, name: 'phòng 103', type: 0, price: 120000, status: 2)
+        ]));
     homestayList.add(Homestay(
         id: 2,
-        name: 'Vinh Tuy 2',
+        name: 'Vĩnh Tuy 2',
         address: 'Số 15, phố Vĩnh Tuy',
         operationStartDate: DateTime.now()));
     homestayList.add(Homestay(
         id: 3,
-        name: 'Vinh Tuy 3',
+        name: 'Vĩnh Tuy 3',
         address: 'Số 15, phố Vĩnh Tuy',
         operationStartDate: DateTime.now()));
     homestayList.add(Homestay(

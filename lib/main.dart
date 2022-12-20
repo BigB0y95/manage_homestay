@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:manager_homestay_app/widgets/my_home_page/my_home_page_widget.dart';
+
+import 'constants/strings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,8 +14,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return GetMaterialApp(
+      title: Strings.appName,
       theme: ThemeData(
         // This is the theme of your application.
         //

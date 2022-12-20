@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:manager_homestay_app/widgets/common/app_bar_widget.dart';
 
-import 'homestay_list_widget.dart';
+import 'homestay_page/homestay_list_widget.dart';
 
 class MyHomePageWidget extends StatefulWidget {
   const MyHomePageWidget({Key? key}) : super(key: key);
@@ -21,10 +21,6 @@ class _MyHomePageWidgetState extends State<MyHomePageWidget> {
       'Index 1: Business',
       style: textBoldSize30,
     ),
-    Text(
-      'Index 2: School',
-      style: textBoldSize30,
-    ),
   ];
 
   void _onItemTapped(int index) {
@@ -33,19 +29,19 @@ class _MyHomePageWidgetState extends State<MyHomePageWidget> {
     });
   }
 
-  void _incrementCounter() {
+  void _addHomestay() {
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: 'Manager Homestay'),
+      appBar: const AppBarWidget(title: 'Manage Homestay'),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _addHomestay,
         tooltip: 'add homestay',
         child: const Icon(Icons.add_home),
       ),

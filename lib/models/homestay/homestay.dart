@@ -1,3 +1,4 @@
+import 'package:manager_homestay_app/models/room/room.dart';
 import 'package:manager_homestay_app/utils/commons.dart';
 
 class Homestay {
@@ -5,12 +6,10 @@ class Homestay {
   String? name;
   String? address;
   DateTime? operationStartDate;
+  List<Room>? rooms;
 
   Homestay(
-      {required this.id,
-      required this.name,
-      required this.address,
-      required this.operationStartDate});
+      {this.id, this.name, this.address, this.operationStartDate, this.rooms});
 
   Homestay.fromJson(dynamic json) {
     id = json['id'] ?? 0;
@@ -19,7 +18,14 @@ class Homestay {
     operationStartDate = json['operationStartDate'] != null
         ? Commons.formatDateTimeZone(json['operationStartDate'] as String)
         : null;
-    ;
+    rooms = [];
+    if (json['rooms'] != null) {
+      json['rooms'].forEach((v) {
+        if (v != null) {
+          rooms?.add(Room.fromJson(v));
+        }
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -28,6 +34,9 @@ class Homestay {
     map['name'] = name;
     map['address'] = address;
     map['operationStartDate'] = operationStartDate;
+    if (rooms != null) {
+      map['rooms'] = rooms?.map((v) => v.toJson()).toList();
+    }
     return map;
   }
 }
