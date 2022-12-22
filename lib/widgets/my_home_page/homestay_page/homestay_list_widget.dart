@@ -16,8 +16,7 @@ class HomestayList extends StatefulWidget {
 }
 
 class _HomestayListState extends State<HomestayList> {
-  final PagingController<int, Homestay> _pagingController =
-      PagingController(firstPageKey: 1);
+  final PagingController<int, Homestay> _pagingController = PagingController(firstPageKey: 1);
   var homestayList = <Homestay>[].obs;
 
   @override
@@ -29,31 +28,15 @@ class _HomestayListState extends State<HomestayList> {
   }
 
   Future<void> _fetchPage(int page) async {
-    homestayList.add(Homestay(
-        id: 1,
-        name: 'Vĩnh Tuy 1 Phố Hai Bà Trưng Hà Nội',
-        address: 'Số 15, phố Vĩnh Tuy',
-        operationStartDate: DateTime.now(),
-        rooms: [
-          Room(id: 1, name: 'phòng 101', type: 0, price: 120000, status: 0),
-          Room(id: 2, name: 'phòng 102', type: 0, price: 120000, status: 1),
-          Room(id: 3, name: 'phòng 103', type: 0, price: 120000, status: 2)
-        ]));
-    homestayList.add(Homestay(
-        id: 2,
-        name: 'Vĩnh Tuy 2',
-        address: 'Số 15, phố Vĩnh Tuy',
-        operationStartDate: DateTime.now()));
-    homestayList.add(Homestay(
-        id: 3,
-        name: 'Vĩnh Tuy 3',
-        address: 'Số 15, phố Vĩnh Tuy',
-        operationStartDate: DateTime.now()));
-    homestayList.add(Homestay(
-        id: 4,
-        name: 'Vinh Tuy 4',
-        address: 'Số 15, phố Vĩnh Tuy',
-        operationStartDate: DateTime.now()));
+    homestayList
+        .add(Homestay(id: 1, name: 'Vĩnh Tuy 1 Phố Hai Bà Trưng Hà Nội', status: 0, address: 'Số 15, phố Vĩnh Tuy', operationStartDate: DateTime.now(), rooms: [
+      Room(id: 1, name: 'phòng 101', type: 0, price: 120000, status: 0),
+      Room(id: 2, name: 'phòng 102', type: 0, price: 120000, status: 1),
+      Room(id: 3, name: 'phòng 103', type: 0, price: 120000, status: 2)
+    ]));
+    homestayList.add(Homestay(id: 2, name: 'Vĩnh Tuy 2', status: 1, address: 'Số 15, phố Vĩnh Tuy', operationStartDate: DateTime.now()));
+    homestayList.add(Homestay(id: 3, name: 'Vĩnh Tuy 3', status: 2, address: 'Số 15, phố Vĩnh Tuy', operationStartDate: DateTime.now()));
+    homestayList.add(Homestay(id: 4, name: 'Vinh Tuy 4', status: 0, address: 'Số 15, phố Vĩnh Tuy', operationStartDate: DateTime.now()));
     _pagingController.appendLastPage(homestayList);
   }
 
@@ -68,12 +51,12 @@ class _HomestayListState extends State<HomestayList> {
       color: AppColor.appBackground,
       padding: const EdgeInsets.all(10),
       child: PaginatedGridWidget(
-        gridCount: 3,
+        gridCount: 2,
         scrollController: ScrollController(),
         pagingController: _pagingController,
         refresh: onRefresh,
         refreshPage: 1,
-        childRatio: 1 / 1.27,
+        childRatio: 1 / 1.1,
         itemBuilder: (context, item, index) => HomestayWidget(homestay: item),
       ),
     );

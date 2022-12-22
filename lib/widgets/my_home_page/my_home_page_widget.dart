@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:manager_homestay_app/constants/color.dart';
 import 'package:manager_homestay_app/widgets/common/app_bar_widget.dart';
 
 import 'homestay_page/homestay_list_widget.dart';
@@ -13,14 +14,12 @@ class MyHomePageWidget extends StatefulWidget {
 
 class _MyHomePageWidgetState extends State<MyHomePageWidget> {
   int _selectedIndex = 0;
-  static const TextStyle textBoldSize30 =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold, letterSpacing: 5);
+  static const TextStyle textBoldSize30 = TextStyle(fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 5);
   static const List<Widget> _widgetOptions = <Widget>[
     HomestayList(),
-    Text(
-      'Index 1: Business',
-      style: textBoldSize30,
-    ),
+    Text('Dữ liệu', style: textBoldSize30),
+    Text('Hướng dẫn', style: textBoldSize30),
+    Text('Thông tin ứng dụng', style: textBoldSize30),
   ];
 
   void _onItemTapped(int index) {
@@ -36,28 +35,37 @@ class _MyHomePageWidgetState extends State<MyHomePageWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: 'Manage Homestay'),
+      appBar: const AppBarWidget(title: 'My Homestay'),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addHomestay,
         tooltip: 'add homestay',
+        backgroundColor: AppColor.pastDueColor,
         child: const Icon(Icons.add_home),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Trang chủ',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),
-            label: 'Data',
+            label: 'Dữ liệu',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu_book),
+            label: 'Hướng dẫn',
+          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.widgets),
+          //   label: 'Thông tin',
+          // ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: AppColor.pastDueColor,
         onTap: _onItemTapped,
       ),
     );

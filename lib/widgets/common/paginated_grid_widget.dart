@@ -77,12 +77,10 @@ class PaginatedGridWidget extends StatelessWidget {
       clipBehavior: Clip.none,
       gridDelegate: _buildSliverGrid(),
       builderDelegate: PagedChildBuilderDelegate<dynamic>(
-        firstPageProgressIndicatorBuilder:
-            isLoading == true ? (context) => const LoadingWidget() : null,
+        firstPageProgressIndicatorBuilder: isLoading == true ? (context) => const LoadingWidget() : null,
         newPageProgressIndicatorBuilder: (context) => const LoadingWidget(),
         noItemsFoundIndicatorBuilder: (context) => const NoData(),
-        itemBuilder: (context, item, index) =>
-            itemBuilder(context, item, index),
+        itemBuilder: (context, item, index) => itemBuilder(context, item, index),
       ),
     );
   }
