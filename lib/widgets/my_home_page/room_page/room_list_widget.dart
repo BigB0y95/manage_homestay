@@ -4,13 +4,15 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:manager_homestay_app/constants/color.dart';
+import 'package:manager_homestay_app/models/homestay/homestay.dart';
 import 'package:manager_homestay_app/models/room/room.dart';
 import 'package:manager_homestay_app/widgets/common/app_bar_widget.dart';
 import 'package:manager_homestay_app/widgets/common/paginated_grid_widget.dart';
 import 'package:manager_homestay_app/widgets/my_home_page/room_page/room_widget.dart';
 
 class RoomListWidget extends StatefulWidget {
-  const RoomListWidget({Key? key}) : super(key: key);
+  final Homestay homestay;
+  const RoomListWidget({Key? key, required this.homestay}) : super(key: key);
 
   @override
   State<RoomListWidget> createState() => _RoomListWidgetState();
@@ -49,56 +51,77 @@ class _RoomListWidgetState extends State<RoomListWidget> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
-          if (isDialOpen.value) {
-            isDialOpen.value = false;
-            return false;
-          }
-          return true;
-        },
-        child: Scaffold(
-          appBar: const AppBarWidget(title: 'Quản lý phòng'),
-          body: Container(
-            height: double.infinity,
-            color: AppColor.appBackground,
-            padding: const EdgeInsets.all(10),
-            child: PaginatedGridWidget(
-              gridCount: 3,
-              scrollController: ScrollController(),
-              pagingController: _pagingController,
-              refresh: onRefresh,
-              refreshPage: 1,
-              childRatio: 1 / 1.27,
-              itemBuilder: (context, item, index) => RoomWidget(room: item),
+      onWillPop: () async {
+        if (isDialOpen.value) {
+          isDialOpen.value = false;
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        appBar: const AppBarWidget(title: 'Quản lý phòng'),
+        body: Container(
+          height: double.infinity,
+          color: AppColor.appBackground,
+          padding: const EdgeInsets.all(10),
+          child: PaginatedGridWidget(
+            isSliver: true,
+            widgetAboveList: noteWidget(),
+            gridCount: 3,
+            scrollController: ScrollController(),
+            pagingController: _pagingController,
+            refresh: onRefresh,
+            refreshPage: 1,
+            childRatio: 1 / 1.27,
+            itemBuilder: (context, item, index) => RoomWidget(room: item),
+          ),
+        ),
+        floatingActionButton: SpeedDial(
+          icon: Icons.add,
+          activeIcon: Icons.close,
+          openCloseDial: isDialOpen,
+          spacing: 3,
+          childPadding: const EdgeInsets.all(5),
+          spaceBetweenChildren: 4,
+          backgroundColor: AppColor.pastDueColor,
+          children: [
+            SpeedDialChild(
+                child: const Icon(Icons.exposure_plus_1, color: Colors.white), label: 'thêm một phòng', backgroundColor: AppColor.planningColor, onTap: () {}),
+            SpeedDialChild(
+              child: const Icon(Icons.add_to_photos, color: Colors.white),
+              label: 'thêm nhiều phòng',
+              backgroundColor: AppColor.planningColor,
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget noteWidget() {
+    return Container(
+      height: 50,
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Column(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: Text(
+              widget.homestay.name ?? '',
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
             ),
           ),
-          floatingActionButton: SpeedDial(
-            icon: Icons.add,
-            activeIcon: Icons.close,
-            openCloseDial: isDialOpen,
-            spacing: 3,
-            childPadding: const EdgeInsets.all(5),
-            spaceBetweenChildren: 4,
-            backgroundColor: AppColor.pastDueColor,
-            children: [
-              SpeedDialChild(
-                  child: const Icon(Icons.exposure_plus_1, color: Colors.white),
-                  label: 'thêm một phòng',
-                  backgroundColor: AppColor.planningColor,
-                  onTap: () {}),
-              SpeedDialChild(
-                child: const Icon(Icons.add_to_photos, color: Colors.white),
-                label: 'thêm nhiều phòng',
-                backgroundColor: AppColor.planningColor,
-                onTap: () {},
-              ),
-            ],
+          SizedBox(
+            width: double.infinity,
+            // margin: const EdgeInsets.only(left: 5, right: 5),
+            child: Text(
+              widget.homestay.address ?? '',
+              style: const TextStyle(fontSize: 13),
+            ),
           ),
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: _addRoom,
-          //   tooltip: 'add room',
-          //   child: const Icon(Icons.add),
-          // ),
-        ));
+        ],
+      ),
+    );
   }
 }

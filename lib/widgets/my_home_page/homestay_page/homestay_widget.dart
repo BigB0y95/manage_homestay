@@ -37,7 +37,7 @@ class _HomestayWidgetState extends State<HomestayWidget> {
       padding: const EdgeInsets.all(10),
       child: InkWell(
         onTap: () {
-          Get.to(() => const RoomListWidget(), transition: Transition.rightToLeft);
+          Get.to(() => RoomListWidget(homestay: widget.homestay), transition: Transition.rightToLeft);
         },
         child: Column(
           children: [
@@ -59,38 +59,74 @@ class _HomestayWidgetState extends State<HomestayWidget> {
                   widget.homestay.name ?? '',
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
-                  maxLines: 3,
+                  maxLines: 2,
                   style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
                 ),
               ),
             ),
+            // Expanded(
+            //   child: Container(
+            //     margin: const EdgeInsets.only(bottom: 10),
+            //     width: double.infinity,
+            //     child: Text(
+            //       widget.homestay.address ?? '',
+            //       overflow: TextOverflow.ellipsis,
+            //       // textAlign: TextAlign.center,
+            //       maxLines: 2,
+            //       style: const TextStyle(fontSize: 13),
+            //     ),
+            //   ),
+            // ),
             widget.homestay.status == 0
-                ? Container(
+                ? SizedBox(
+                    height: 20,
                     width: double.infinity,
-                    margin: const EdgeInsets.only(right: 10.0, left: 10.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const FaIcon(
-                          FontAwesomeIcons.doorOpen,
-                          size: 20,
-                          color: AppColor.emptyStatus,
+                        Row(
+                          children: [
+                            const FaIcon(
+                              FontAwesomeIcons.doorOpen,
+                              size: 18,
+                              color: AppColor.emptyStatus,
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 8),
+                              alignment: Alignment.bottomLeft,
+                              child: const Text(
+                                '2 / 5',
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 10),
-                          alignment: Alignment.bottomLeft,
-                          child: const Text(
-                            '2 / 5',
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            style: TextStyle(fontSize: 14),
+                        InkWell(
+                          onTap: () {},
+                          child: const FaIcon(
+                            FontAwesomeIcons.penToSquare,
+                            size: 18,
+                            color: AppColor.pastDueColor,
                           ),
                         ),
                       ],
                     ),
                   )
-                : Container()
+                : Container(
+                    alignment: Alignment.centerRight,
+                    width: double.infinity,
+                    child: InkWell(
+                      onTap: () {},
+                      child: const FaIcon(
+                        FontAwesomeIcons.penToSquare,
+                        size: 18,
+                        color: AppColor.pastDueColor,
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

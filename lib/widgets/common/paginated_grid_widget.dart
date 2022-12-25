@@ -20,6 +20,7 @@ class PaginatedGridWidget extends StatelessWidget {
   final double childRatio;
   final bool isLoading;
   final bool shrinkWrap;
+  final bool isSliver;
   final double refreshDisplacement;
   final ScrollController? scrollController;
   final Widget? widgetAboveList;
@@ -40,6 +41,7 @@ class PaginatedGridWidget extends StatelessWidget {
       this.childRatio = 1,
       this.isLoading = true,
       this.shrinkWrap = true,
+      this.isSliver = false,
       this.refreshDisplacement = 40,
       this.scrollController,
       this.widgetAboveList})
@@ -62,7 +64,7 @@ class PaginatedGridWidget extends StatelessWidget {
       child: CustomRefreshIndicator(
         displacement: refreshDisplacement,
         onRefresh: () => Future.sync(() => {refresh(refreshPage)}),
-        child: _buildNormalGridView(),
+        child: isSliver ? _buildSliverGridView() : _buildNormalGridView(),
       ),
     );
   }
@@ -82,6 +84,34 @@ class PaginatedGridWidget extends StatelessWidget {
         noItemsFoundIndicatorBuilder: (context) => const NoData(),
         itemBuilder: (context, item, index) => itemBuilder(context, item, index),
       ),
+    );
+  }
+
+  Widget _buildSliverGridView() {
+    return CustomScrollView(
+      clipBehavior: Clip.none,
+      shrinkWrap: shrinkWrap,
+      controller: scrollController,
+      physics: const AlwaysScrollableScrollPhysics(),
+      scrollDirection: isHorizontal ? Axis.horizontal : Axis.vertical,
+      slivers: [
+        SliverToBoxAdapter(child: widgetAboveList ?? const SizedBox()),
+        PagedSliverGrid(
+          pagingController: pagingController,
+          addAutomaticKeepAlives: false,
+          gridDelegate: _buildSliverGrid(),
+          builderDelegate: PagedChildBuilderDelegate<dynamic>(
+            firstPageProgressIndicatorBuilder: isLoading == true ? (context) => const LoadingWidget() : null,
+            newPageProgressIndicatorBuilder: (context) => const LoadingWidget(),
+            noItemsFoundIndicatorBuilder: (context) => const NoData(),
+            itemBuilder: (context, item, index) => itemBuilder(context, item, index),
+          ),
+        ),
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Container(),
+        ),
+      ],
     );
   }
 }
