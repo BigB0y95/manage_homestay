@@ -50,7 +50,7 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 5),
+            margin: const EdgeInsets.only(bottom: 5),
             child: Row(
               children: [
                 Text(widget.label, style: labelBoldStyle),
@@ -58,40 +58,38 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
               ],
             ),
           ),
-          Container(
-            child: TextFormField(
-              enabled: widget.isReadOnly == true ? false : true,
-              readOnly: widget.isReadOnly ?? false,
-              autofocus: widget.autoFocus ?? false,
-              initialValue: widget.initialValue,
-              maxLines: widget.moreLines == true ? null : 1,
-              style: TextStyle(
-                fontSize: widget.fontSize ?? 13,
-                // height: 16 / 13,
-                overflow: TextOverflow.ellipsis,
-                decoration: widget.textUnderline == true ? TextDecoration.underline : TextDecoration.none,
-              ),
-              strutStyle: StrutStyle(
-                fontSize: 12,
-                // height: 16 / 13,
-              ),
-              decoration: InputDecoration(
-                hintText: widget.hint,
-                hintMaxLines: widget.maxLineHintText,
-                hintStyle: TextStyle(
-                  color: AppColor.hintTextColor,
-                  fontSize: widget.fontSize ?? 13,
-                ),
-                border: const OutlineInputBorder(),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: widget.isReadOnly == true ? AppColor.hintTextColor : Colors.black, width: 1.0),
-                ),
-              ),
-              onChanged: widget.onChanged,
-              textInputAction: TextInputAction.next,
-              obscureText: widget.isPassword ?? false,
-              keyboardType: widget.textInputType ?? TextInputType.text,
+          TextFormField(
+            enabled: widget.isReadOnly == true ? false : true,
+            readOnly: widget.isReadOnly ?? false,
+            autofocus: widget.autoFocus ?? false,
+            initialValue: widget.initialValue,
+            maxLines: widget.moreLines == true ? null : 1,
+            style: TextStyle(
+              fontSize: widget.fontSize ?? 13,
+              // height: 16 / 13,
+              overflow: TextOverflow.ellipsis,
+              decoration: widget.textUnderline == true ? TextDecoration.underline : TextDecoration.none,
             ),
+            strutStyle: const StrutStyle(
+              fontSize: 12,
+              // height: 16 / 13,
+            ),
+            decoration: InputDecoration(
+              hintText: widget.hint,
+              hintMaxLines: widget.maxLineHintText,
+              hintStyle: TextStyle(
+                color: AppColor.hintTextColor,
+                fontSize: widget.fontSize ?? 13,
+              ),
+              border: const OutlineInputBorder(),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: widget.isReadOnly == true ? AppColor.hintTextColor : Colors.black, width: 1.0),
+              ),
+            ),
+            onChanged: widget.onChanged,
+            textInputAction: TextInputAction.next,
+            obscureText: widget.isPassword ?? false,
+            keyboardType: widget.textInputType ?? TextInputType.text,
           ),
         ],
       ),
