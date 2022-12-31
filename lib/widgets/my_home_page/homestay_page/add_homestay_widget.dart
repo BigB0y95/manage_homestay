@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manager_homestay_app/constants/color.dart';
 import 'package:manager_homestay_app/constants/dropdown.dart';
+import 'package:manager_homestay_app/constants/strings.dart';
 import 'package:manager_homestay_app/utils/device/device_utils.dart';
 import 'package:manager_homestay_app/widgets/common/dropdown_field_widget.dart';
+import 'package:manager_homestay_app/widgets/common/input_date_time_field_widget.dart';
 import 'package:manager_homestay_app/widgets/common/input_text_field_widget.dart';
 import 'package:manager_homestay_app/widgets/common/template_page_widget.dart';
 
@@ -22,6 +24,7 @@ class _AddHomestayWidgetState extends State<AddHomestayWidget> {
   final _homestayStatusValue = 0.obs;
   final _homestayTypeIndex = 0.obs;
   final _homestayTypeValue = 0.obs;
+  final _homestayOperationStartDateValue = Rxn<DateTime>();
 
   var messageHomestayName = <String>[].obs;
   var messageHomestayAddress = <String>[].obs;
@@ -38,20 +41,20 @@ class _AddHomestayWidgetState extends State<AddHomestayWidget> {
       child: ListView(
         children: [
           InputTextFieldWidget(
-            label: 'Tên homestay',
+            label: Strings.homestayNameLabel,
             isRequired: true,
-            hint: 'Tối đa 255 ký tự',
+            hint: Strings.upTo255Characters,
             onChanged: (String value) => setState(() => _homestayName.value = value),
           ),
           InputTextFieldWidget(
-            label: 'Địa chỉ homestay',
+            label: Strings.homestayAddressLabel,
             isRequired: true,
-            hint: 'Tối đa 255 ký tự',
+            hint: Strings.upTo255Characters,
             onChanged: (String value) => setState(() => _homestayAddress.value = value),
           ),
           Obx(
             () => DropdownFieldWidget(
-              label: 'Trạng thái',
+              label: Strings.homestayStatusLabel,
               isRequired: true,
               dialogHeight: 200,
               listItems: Dropdown.homestayStatus,
@@ -64,7 +67,7 @@ class _AddHomestayWidgetState extends State<AddHomestayWidget> {
           ),
           Obx(
             () => DropdownFieldWidget(
-              label: 'Loại hình kinh doanh',
+              label: Strings.homestayTypeLabel,
               isRequired: true,
               dialogHeight: 200,
               listItems: Dropdown.homestayType,
@@ -75,7 +78,35 @@ class _AddHomestayWidgetState extends State<AddHomestayWidget> {
               selectedIndex: _homestayTypeIndex.value,
             ),
           ),
+          Obx(
+            () => InputDateTimeFieldWidget(
+              label: Strings.homestayOperationStartDateLabel,
+              isRequired: true,
+              onChanged: (DateTime value) => setState(() => {
+                    _homestayOperationStartDateValue.value = value,
+                  }),
+              initialValue: _homestayOperationStartDateValue.value,
+            ),
+          ),
+          _buildButtonRegister(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildButtonRegister() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.only(top: 20, bottom: 20),
+      child: CupertinoButton(
+        onPressed: () {},
+        minSize: 60,
+        alignment: Alignment.center,
+        color: AppColor.pastDueColor,
+        child: const Text(
+          Strings.registerButton,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }

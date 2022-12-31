@@ -6,6 +6,7 @@ class Homestay {
   String? name;
   int? status; // 0. đang hoạt động - 1. đang sửa chữa - 2. không còn hoạt động
   String? address;
+  int? type; //0. Thê theo giờ - 1.Thuê theo ngày - 2. Thuê theo tháng
   DateTime? operationStartDate; // ngày bắt đầu đi vào hoạt động
   List<Room>? rooms;
 
@@ -16,6 +17,7 @@ class Homestay {
     name = json['name'] ?? '';
     status = json['status'] ?? 0;
     address = json['address'] ?? '';
+    type = json['type'] ?? 0;
     operationStartDate = json['operationStartDate'] != null ? Commons.formatDateTimeZone(json['operationStartDate'] as String) : null;
     rooms = [];
     if (json['rooms'] != null) {
@@ -33,6 +35,7 @@ class Homestay {
     map['name'] = name;
     map['status'] = status;
     map['address'] = address;
+    map['type'] = type;
     map['operationStartDate'] = operationStartDate;
     if (rooms != null) {
       map['rooms'] = rooms?.map((v) => v.toJson()).toList();

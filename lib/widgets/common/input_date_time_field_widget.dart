@@ -1,18 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-class DropdownFieldWidget extends StatefulWidget {
+class InputDateTimeFieldWidget extends StatefulWidget {
   final String label;
   final bool isRequired;
-  final dynamic initialValue;
+  final DateTime? initialValue;
   final bool? isReadOnly;
-  final Map<String, int> listItems;
   final double? marginBottom;
-  final Function(int) onChanged;
-  final int selectedIndex;
+  final Function(DateTime) onChanged;
   final double? dialogHeight;
-  const DropdownFieldWidget(
+  const InputDateTimeFieldWidget(
       {Key? key,
       required this.label,
       this.isRequired = false,
@@ -20,20 +18,16 @@ class DropdownFieldWidget extends StatefulWidget {
       this.isReadOnly,
       this.marginBottom,
       required this.onChanged,
-      required this.listItems,
-      required this.selectedIndex,
       this.dialogHeight})
       : super(key: key);
 
   @override
-  State<DropdownFieldWidget> createState() => _DropdownFieldWidgetState();
+  State<InputDateTimeFieldWidget> createState() => _InputDateTimeFieldWidgetState();
 }
 
-class _DropdownFieldWidgetState extends State<DropdownFieldWidget> {
+class _InputDateTimeFieldWidgetState extends State<InputDateTimeFieldWidget> {
   TextStyle labelBoldStyle = const TextStyle(fontSize: 13, fontWeight: FontWeight.w700);
   TextStyle requiredIconBoldStyle = const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.red);
-  final double _kItemExtent = 32.0;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,20 +60,22 @@ class _DropdownFieldWidgetState extends State<DropdownFieldWidget> {
                   currentFocus.unfocus();
                 }
                 _showCupertinoDialog(
-                  CupertinoPicker(
-                    magnification: 1.22,
-                    squeeze: 1.2,
-                    useMagnifier: true,
-                    itemExtent: _kItemExtent,
-                    scrollController: FixedExtentScrollController(initialItem: widget.selectedIndex),
-                    onSelectedItemChanged: widget.onChanged,
-                    children: widget.listItems.keys.map((e) => Center(child: Text(e))).toList(),
+                  CupertinoDatePicker(
+                    initialDateTime: widget.initialValue ?? DateTime.now(),
+                    mode: CupertinoDatePickerMode.date,
+                    use24hFormat: true,
+                    onDateTimeChanged: widget.onChanged,
                   ),
                 );
               },
               child: Text(
-                widget.listItems.keys.elementAt(widget.selectedIndex),
-                style: const TextStyle(fontSize: 13, height: 16 / 13, color: Colors.black),
+                DateFormat('dd-MM-yyyy').format(widget.initialValue ?? DateTime.now()),
+                maxLines: 1,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  height: 16 / 12,
+                ),
               ),
             ),
           ),
